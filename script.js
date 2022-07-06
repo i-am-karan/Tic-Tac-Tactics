@@ -107,7 +107,8 @@ function checkTie() {
     for(var i=0;i<9;i++){
         if(typeof board[i] =='number') ct++;
     }
-	if (ct==0) {
+    var ch=checkWinner(board,human);
+	if (ct==0 && ch==null) {
 		for (var i = 0; i < cells.length; i++) {
 			cells[i].style.backgroundColor = "green";
 			cells[i].removeEventListener('click', turnClick, false);
