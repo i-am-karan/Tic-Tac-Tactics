@@ -30,10 +30,16 @@
     <div class="endgame">
         <div class="text"></div>
     </div>
-    <button class="easy" onclick="changeDifficulty()">Make Hard</button>
-    <button class="start" onclick="startGame()">ReStart</button>
+    <div>
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty" onchange="changeDifficulty()">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    </div>
+    <button class="start" onclick="startGame()">Restart</button>
     <script src="script.js"></script>
-    
 </body>
 
 </html>

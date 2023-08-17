@@ -1,7 +1,8 @@
 var board;
 const computer='X';
 const human='O';
-var ishard=-1;
+let difficulty="easy";
+
 const winning_combination=[
     [0,1,2],
     [3,4,5],
@@ -18,9 +19,6 @@ startGame();
 function startGame() {
     document.querySelector(".endgame").style.display = "none";
     board = Array.from(Array(9).keys());
-    ishard=-1;
-    document.querySelector(".easy").innerHTML="Make Hard";
-    document.querySelector(".easy").style.backgroundColor="rgb(81 157 187)";
     for (var i = 0; i < cells.length; i++) {
         cells[i].innerText = '';
         cells[i].style.removeProperty('background-color');
@@ -29,9 +27,10 @@ function startGame() {
 }
 
 function changeDifficulty(){
-    if(ishard==-1) ishard=1;
-    document.querySelector(".easy").innerHTML="Make Easy";
-    document.querySelector(".easy").style.backgroundColor="red";
+    const difficultySelect = document.getElementById("difficulty");
+    const selectedDifficulty = difficultySelect.value;
+    difficulty = selectedDifficulty;
+    startGame();
 }
 
 // Starts Turns Based on Human Click
@@ -97,8 +96,16 @@ function declareWinner(who) {
 
 // Computer uses minimax algorithm to find the best spot
 function bestSpot() {
-   if(ishard==1)	return minimax(board, computer).index;
-   return minimax2(board,computer);
+    console.log(difficulty);
+    if(difficulty=="easy"){
+        return minimax3(board,computer);
+    }
+    else if(difficulty=="medium"){
+        return minimax2(board,computer);
+    }
+    else{
+        return minimax(board,computer,0).index;
+    }
 }
 
 // Checking for any tie
@@ -125,7 +132,7 @@ function otherplayer(player){
 }
 
 // Minimax Algorithm
-function minimax(mimic_board, player) {
+function minimax(mimic_board, player,isMedium) {
     var ct=0;
     for(var i=0;i<9;i++){
         if(typeof mimic_board[i] =='number') ct++;
@@ -137,6 +144,7 @@ function minimax(mimic_board, player) {
 	} else if (ct==0) {
 		return {score: 0};
 	}
+    if(isMedium==2) return {score:0};
 	let best_move =-1;
     let best_score=Infinity;
     if(player==computer) best_score=-Infinity;
@@ -144,27 +152,52 @@ function minimax(mimic_board, player) {
         if(typeof mimic_board[i]!='number') continue;
 		let move=mimic_board[i];
 		mimic_board[i] = player;
-        let temp= minimax(mimic_board,otherplayer(player));
+        let nIsMedium=isMedium;
+        if(nIsMedium==1) nIsMedium++;
+        let temp= minimax(mimic_board,otherplayer(player),nIsMedium);
         if(temp.score>best_score && player==computer){
               best_score=temp.score;
               best_move=move;
         }
-        if(temp.score<best_score && player==human){
+        if(temp.score<=best_score && player==human){
             best_score=temp.score;
             best_move=move;
         }
 		mimic_board[i] = move;
 	}
+    // console.log(best_move+" "+best_score)
 	return {index:best_move,score:best_score};
 }
 
 function emptySquares() {
 	return board.filter(s => typeof s == 'number');
 }
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-function minimax2(mimic_board, player) {
+  
+function getIndex(openspot){
+   const len=openspot.length;
+   return openspot[getRandomInt(0,len-1)];
+}
+function minimax2(mimic_board,player){
+ const res1=minimax(mimic_board,otherplayer(player),1);
+ const res2=minimax(mimic_board,player,1);
+ if(res1.score==-10 && res2.score!=10){
+       console.log(res1);
+       return res1.index;     
+    }
+
+ if(res2.score==10){
+    return res2.index;
+ }
+ const openspot=emptySquares();
+ return getIndex(openspot);
+}
+function minimax3(mimic_board, player) {
    let openspot=emptySquares();
-   let len=openspot.length;
-   Math.floor(Math.random()*len);
-   return openspot[Math.floor(Math.random()*len)];
+   return getIndex(openspot);
 }
