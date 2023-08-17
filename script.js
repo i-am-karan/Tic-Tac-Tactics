@@ -1,7 +1,8 @@
 var board;
 const computer='X';
 const human='O';
-var ishard=-1;
+let difficulty="easy";
+
 const winning_combination=[
     [0,1,2],
     [3,4,5],
@@ -18,9 +19,6 @@ startGame();
 function startGame() {
     document.querySelector(".endgame").style.display = "none";
     board = Array.from(Array(9).keys());
-    ishard=-1;
-    document.querySelector(".easy").innerHTML="Make Medium";
-    document.querySelector(".easy").style.backgroundColor="rgb(81 157 187)";
     for (var i = 0; i < cells.length; i++) {
         cells[i].innerText = '';
         cells[i].style.removeProperty('background-color');
@@ -29,9 +27,10 @@ function startGame() {
 }
 
 function changeDifficulty(){
-    if(ishard==-1) ishard=1;
-    document.querySelector(".easy").innerHTML="Make Easy";
-    document.querySelector(".easy").style.backgroundColor="red";
+    const difficultySelect = document.getElementById("difficulty");
+    const selectedDifficulty = difficultySelect.value;
+    difficulty = selectedDifficulty;
+    startGame();
 }
 
 // Starts Turns Based on Human Click
@@ -97,11 +96,16 @@ function declareWinner(who) {
 
 // Computer uses minimax algorithm to find the best spot
 function bestSpot() {
-   if(ishard==1){
-   
-    return minimax(board,computer,0).index;
-   }
-   return minimax3(board,computer);
+    console.log(difficulty);
+    if(difficulty=="easy"){
+        return minimax3(board,computer);
+    }
+    else if(difficulty=="medium"){
+        return minimax2(board,computer);
+    }
+    else{
+        return minimax(board,computer,0).index;
+    }
 }
 
 // Checking for any tie
@@ -179,11 +183,7 @@ function getIndex(openspot){
    const len=openspot.length;
    return openspot[getRandomInt(0,len-1)];
 }
-function minimax2(mimic_board, player) {
-   let openspot=emptySquares();
-   return getIndex(openspot);
-}
-function minimax3(mimic_board,player){
+function minimax2(mimic_board,player){
  const res1=minimax(mimic_board,otherplayer(player),1);
  const res2=minimax(mimic_board,player,1);
  if(res1.score==-10 && res2.score!=10){
@@ -196,4 +196,8 @@ function minimax3(mimic_board,player){
  }
  const openspot=emptySquares();
  return getIndex(openspot);
+}
+function minimax3(mimic_board, player) {
+   let openspot=emptySquares();
+   return getIndex(openspot);
 }

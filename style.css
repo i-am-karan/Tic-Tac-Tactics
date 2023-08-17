@@ -1,40 +1,44 @@
-body{
+body {
     background-image: url("https://webdesignledger.com/wp-content/uploads/2012/09/patterns03a.jpg");
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 h2 {
-    font-size: 400%;
-    font-family:Georgia, 'Times New Roman', Times, serif;
     position: relative;
-    top: 1vh;
-    left: 5wh;
+    font-size: 4rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top:-1vh;
     text-align: center;
 }
 
 table {
-     border-collapse: collapse;
-     position: relative;
-     top: 10vh;
-     left: 41vw;
- }
- 
- td {
-     border: 2px solid rgb(0,0,0);
-     height: 100px;
-     width: 100px;
+    border-collapse: collapse;
+    margin-top: 6rem;
+}
 
-     text-align: center;
-     vertical-align: middle;
-     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-     font-size: 65px;
-     cursor: pointer;
- }
+td {
+    border: 2px solid rgb(0, 0, 0);
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 3.7rem;
+    cursor: pointer;
+}
 
- table tr:first-child td {
-     border-top: 0;
- }
+table tr:first-child td {
+    border-top: 0;
+}
 
- table tr:last-child td {
+table tr:last-child td {
     border-bottom: 0;
 }
 
@@ -45,69 +49,55 @@ table tr td:first-child {
 table tr td:last-child {
     border-right: 0;
 }
-.easy{
-    position: relative;
-    top:-36vh;
-    left:0vw;
-    background-color: rgb(81 157 187); 
-    border: none;
-    color: white;
-    padding: 15px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    transition: 0.3s;
-    cursor: pointer;
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
 }
 
-.start{
-    position: relative;
-    top:36vh;
-    left:40vw;
-    background-color: rgb(81 157 187); 
+button {
+    background-color: rgb(81, 157, 187);
     border: none;
     color: white;
-    padding: 15px 40px;
+    padding: 1rem 2rem;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    transition: 0.3s;
+    font-size: 2rem;
     cursor: pointer;
+    transition: background-color 0.3s, border 0.3s;
+    margin-top: 5rem;
 }
-/* .easy:hover {
-    background-color: rgb(230, 237, 244);
-    color: #4CAF50;
-  } */
-.easy:visited{
-     background-color: rgb(230, 237, 244); 
-    color: #771b58;
-    /* border: 2px solid #4CAF50; */
-  }
 
-.start:hover {
+button:hover {
     background-color: rgb(234, 237, 244);
     color: #4CAF50;
     border: 2px solid #4CAF50;
-  }
+}
 
 .endgame {
     display: none;
-    width: 20%;
-    height: 20%;
-    background-color: rgb(2, 4, 4);
-    margin: 8% 20% 20% 39%;
     position: absolute;
-    bottom: 1vh;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+    background-color: rgb(2, 4, 4);
     text-align: center;
     border-radius: 5px;
     color: rgb(255, 255, 255);
-    font-size: 2em;
-  }
-
-  .text {
-      margin-top: 20%;
-      font-size: 100%;
-      font-weight: 600;
-  }
+    font-size: 1.5rem;
+    padding: 2rem;
+    z-index: 1; /* Ensure .endgame appears above the table */
+}
+ label {
+  display: inline-block;
+  margin-top: 9vh;
+  font-size: 2rem;
+}
+#difficulty{
+    border-radius: 0.1rem;
+    font-size: 2rem;
+}
