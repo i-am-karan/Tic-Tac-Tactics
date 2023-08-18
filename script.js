@@ -1,6 +1,6 @@
 var board;
-const computer='X';
-const human='O';
+const computer='O';
+const human='X';
 let difficulty="easy";
 
 const winning_combination=[
@@ -96,12 +96,11 @@ function declareWinner(who) {
 
 // Computer uses minimax algorithm to find the best spot
 function bestSpot() {
-    console.log(difficulty);
     if(difficulty=="easy"){
-        return minimax3(board,computer);
+        return Easy(board,computer);
     }
     else if(difficulty=="medium"){
-        return minimax2(board,computer);
+        return Medium(board,computer);
     }
     else{
         return minimax(board,computer,0).index;
@@ -183,21 +182,27 @@ function getIndex(openspot){
    const len=openspot.length;
    return openspot[getRandomInt(0,len-1)];
 }
-function minimax2(mimic_board,player){
+function Medium(mimic_board,player){
  const res1=minimax(mimic_board,otherplayer(player),1);
  const res2=minimax(mimic_board,player,1);
  if(res1.score==-10 && res2.score!=10){
-       console.log(res1);
        return res1.index;     
-    }
+ }
 
  if(res2.score==10){
     return res2.index;
  }
  const openspot=emptySquares();
+const isNumber4Present = openspot.includes(4);
+
+if(isNumber4Present) {
+  for(let i=0;i<6;i++){
+    openspot.push(4);
+  }
+}
  return getIndex(openspot);
 }
-function minimax3(mimic_board, player) {
+function Easy(mimic_board, player) {
    let openspot=emptySquares();
    return getIndex(openspot);
 }
