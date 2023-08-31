@@ -136,7 +136,6 @@ function generateDpKey(board, player){
 function minimax(mimic_board, player,isMedium) {
     let dpKey=generateDpKey(mimic_board,player);
     if(dp.hasOwnProperty(dpKey)) {
-        console.log("returning from dp "+ " "+board+" "+player);
         return dp[dpKey];
     }    
     var ct=0;
