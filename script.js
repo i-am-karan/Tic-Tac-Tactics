@@ -2,7 +2,7 @@ var board;
 const computer='O';
 const human='X';
 let difficulty="easy";
-
+let dp={};
 const winning_combination=[
     [0,1,2],
     [3,4,5],
@@ -18,6 +18,7 @@ startGame();
 //Reseting the Board
 function startGame() {
     document.querySelector(".endgame").style.display = "none";
+    dp={};
     board = Array.from(Array(9).keys());
     for (var i = 0; i < cells.length; i++) {
         cells[i].innerText = '';
@@ -93,7 +94,6 @@ function declareWinner(who) {
     document.querySelector(".endgame").style.opacity = "0.4";
 	document.querySelector(".endgame .text").innerText = who;
 }
-
 // Computer uses minimax algorithm to find the best spot
 function bestSpot() {
     if(difficulty=="easy"){
@@ -103,10 +103,9 @@ function bestSpot() {
         return Medium(board,computer);
     }
     else{
-        return minimax(board,computer,0).index;
+         return minimax(board,computer,0).index;
     }
 }
-
 // Checking for any tie
 function checkTie() {
     var ct=0;
@@ -130,8 +129,16 @@ function otherplayer(player){
     return ('O'+'X').replace(player,"");
 }
 
+function generateDpKey(board, player){
+    return board.join('')+player;
+}
 // Minimax Algorithm
 function minimax(mimic_board, player,isMedium) {
+    let dpKey=generateDpKey(mimic_board,player);
+    if(dp.hasOwnProperty(dpKey)) {
+        console.log("returning from dp "+ " "+board+" "+player);
+        return dp[dpKey];
+    }    
     var ct=0;
     for(var i=0;i<9;i++){
         if(typeof mimic_board[i] =='number') ct++;
@@ -164,8 +171,8 @@ function minimax(mimic_board, player,isMedium) {
         }
 		mimic_board[i] = move;
 	}
-    // console.log(best_move+" "+best_score)
-	return {index:best_move,score:best_score};
+	dp[dpKey]={index:best_move,score:best_score};
+    return dp[dpKey];
 }
 
 function emptySquares() {
@@ -192,7 +199,7 @@ function Medium(mimic_board,player){
  if(res2.score==10){
     return res2.index;
  }
- const openspot=emptySquares();
+const openspot=emptySquares();
 const isNumber4Present = openspot.includes(4);
 
 if(isNumber4Present) {
